@@ -38,8 +38,8 @@ simulation_chatbot/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd simulation_chatbot
+git clone https://github.com/<your-username>/pathway-training-simulator.git
+cd pathway-training-simulator
 ```
 
 ### 2. Create and activate a virtual environment (recommended)
