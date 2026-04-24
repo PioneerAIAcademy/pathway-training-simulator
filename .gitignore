@@ -24,9 +24,6 @@ Thumbs.db
 # Node
 node_modules/
 
-# Generated at runtime
-backend/generated_slides/
-
 # IDE
 .vscode/
 .idea/
