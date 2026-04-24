@@ -1,0 +1,122 @@
+.settings-menu {
+  position: relative;
+  z-index: 100;
+}
+
+/* Gear button */
+.settings-gear {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #454540;
+  padding: 4px 6px;
+  border-radius: 8px;
+  line-height: 1;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.settings-gear:hover { background: rgba(0,0,0,0.1); }
+
+/* Dropdown panel — always dark style like reference */
+.settings-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 220px;
+  background: #2a2a2a;
+  border-radius: 14px;
+  padding: 16px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: dropIn 0.15s ease;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* "Theme" label */
+.settings-section-label {
+  font-size: 0.82rem;
+  color: #999;
+  padding: 2px 4px 8px;
+  font-weight: 500;
+}
+
+/* Three-button theme selector */
+.theme-options {
+  display: flex;
+  gap: 6px;
+  background: #1e1e1e;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 4px;
+}
+
+.theme-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 0;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #999;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+.theme-btn:hover { background: #333; color: #fff; }
+.theme-btn.active {
+  background: #3a3a3a;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+.settings-divider {
+  height: 1px;
+  background: #3a3a3a;
+  margin: 4px 0;
+}
+
+/* Help / Send feedback rows */
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #333;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #e0e0e0;
+  font-size: 0.93rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+  width: 100%;
+}
+.settings-row:hover { background: #3d3d3d; }
+
+.settings-row-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  color: #ccc;
+}
+
+.feedback-icon {
+  background: #5a3020;
+  color: #e07050;
+}

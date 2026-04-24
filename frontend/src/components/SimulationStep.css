@@ -1,0 +1,124 @@
+.sim-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sim-step .step-label,
+.sim-step .instruction { width: 100%; }
+
+.step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.loading { color: var(--text-muted); padding: 32px; }
+
+/* ── Screenshot ──────────────────────────────── */
+.image-wrapper {
+  position: relative;
+  display: block;
+  cursor: crosshair;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 2px 12px var(--shadow-md);
+  width: 100%;
+}
+
+.image-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ── Error toast — fixed top-right ───────────── */
+.error-toast {
+  position: fixed;
+  top: 68px;
+  right: 20px;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(220,38,38,0.4);
+  z-index: 999;
+  pointer-events: none;
+  max-width: 320px;
+  animation: flashIn 0.2s ease;
+}
+
+/* ── Success toast — fixed top-right ─────────── */
+.success-toast {
+  position: fixed;
+  top: 68px;
+  right: 20px;
+  background: #16a34a;
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(22,163,74,0.4);
+  z-index: 999;
+  pointer-events: none;
+  max-width: 320px;
+  animation: flashIn 0.2s ease;
+}
+
+@keyframes flashIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Instruction box — bold gradient ─────────── */
+.instruction {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 18px 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  width: 100%;
+}
+
+.instruction-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.instruction span {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.45;
+  color: #ffffff;
+}
+
+/* ── Continue button (completion steps) ──────── */
+.continue-btn {
+  margin-top: 8px;
+  background: var(--brand);
+  color: var(--brand-text);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.continue-btn:hover { background: var(--brand-hover); }

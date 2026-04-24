@@ -21,6 +21,12 @@ Thumbs.db
 # Streamlit (keep config.toml, ignore secrets)
 .streamlit/secrets.toml
 
+# Node
+node_modules/
+
+# Generated at runtime
+backend/generated_slides/
+
 # IDE
 .vscode/
 .idea/
