@@ -38,10 +38,6 @@ def render_slides(pptx_path: str, output_dir: str) -> dict:
         filename = f"slide_{pptx_num:02d}.png"
         out_path = os.path.join(output_dir, filename)
 
-        if os.path.exists(out_path):
-            rendered[pptx_num] = filename
-            continue
-
         if len(pics) == 1:
             img = Image.open(io.BytesIO(pics[0].image.blob)).convert("RGB")
             img.save(out_path)
