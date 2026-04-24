@@ -1,6 +1,6 @@
 import "./EndScreen.css";
 
-export default function EndScreen({ prevSuccess, completed, onComplete, onReset, onStartOver }) {
+export default function EndScreen({ prevSuccess, onStartOver, onChooseSim }) {
   return (
     <div className="end-screen">
       {prevSuccess && (
@@ -14,7 +14,7 @@ export default function EndScreen({ prevSuccess, completed, onComplete, onReset,
 
         <div className="end-actions">
           <button className="btn-secondary" onClick={onStartOver}>Start Over</button>
-          <button className="btn-primary" onClick={onComplete}>Continue ✓</button>
+          <button className="btn-primary" onClick={onChooseSim}>Choose Simulation</button>
         </div>
       </div>
     </div>

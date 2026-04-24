@@ -12,7 +12,6 @@ export default function App() {
   const [phase, setPhase] = useState("simulation");
   const [simStep, setSimStep] = useState(0);
   const [prevSuccess, setPrevSuccess] = useState(null);
-  const [completed, setCompleted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [theme, setTheme] = useState("light");
   const [chatOpen, setChatOpen] = useState(false);
@@ -32,7 +31,6 @@ export default function App() {
     setPhase("simulation");
     setSimStep(0);
     setPrevSuccess(null);
-    setCompleted(false);
   }
 
   function handleStepCorrect(successMsg, total) {
@@ -51,8 +49,16 @@ export default function App() {
     setPhase("simulation");
     setSimStep(0);
     setPrevSuccess(null);
-    setCompleted(false);
     setChatOpen(false);
+  }
+
+  function handleChooseSim() {
+    setStarted(false);
+    setPhase("simulation");
+    setSimStep(0);
+    setPrevSuccess(null);
+    setChatOpen(false);
+    setSidebarOpen(true);
   }
 
   const showChat = started && phase === "simulation";
@@ -133,10 +139,8 @@ export default function App() {
           {started && phase === "end" && (
             <EndScreen
               prevSuccess={prevSuccess}
-              completed={completed}
-              onComplete={() => setCompleted(true)}
-              onReset={handleReset}
               onStartOver={startSim}
+              onChooseSim={handleChooseSim}
             />
           )}
         </main>

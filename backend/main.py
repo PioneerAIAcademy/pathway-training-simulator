@@ -116,6 +116,10 @@ def load_all_simulations() -> dict:
 
         simulations.setdefault(sim_key, []).append(step)
 
+    # sim-1 ends naturally after the last click step; drop the completion slide
+    if "sim-1" in simulations:
+        simulations["sim-1"] = [s for s in simulations["sim-1"] if not s["is_completion"]]
+
     return simulations
 
 
