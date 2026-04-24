@@ -49,7 +49,7 @@ export default function App() {
     setPhase("simulation");
     setSimStep(0);
     setPrevSuccess(null);
-    setChatOpen(false);
+
   }
 
   function handleChooseSim() {
@@ -57,11 +57,11 @@ export default function App() {
     setPhase("simulation");
     setSimStep(0);
     setPrevSuccess(null);
-    setChatOpen(false);
+
     setSidebarOpen(true);
   }
 
-  const showChat = started && phase === "simulation";
+  const showChat = true;
 
   return (
     <div className="app-shell">
