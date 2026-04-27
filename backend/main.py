@@ -36,7 +36,8 @@ slide_map = build_slide_map(str(PPTX_FILE))
 
 # ── RAG: load article PDFs from Excel hyperlinks ─────────────────────────────
 rag = RAGManager(str(AI_EXCEL_FILE))
-openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+_openai_key = os.getenv("OPENAI_API_KEY", "")
+openai_client = OpenAI(api_key=_openai_key) if _openai_key else None
 
 app.mount("/images", StaticFiles(directory=str(GENERATED_DIR)), name="images")
 
@@ -154,6 +155,8 @@ class ChatRequest(BaseModel):
 
 @app.post("/api/chat")
 def chat(body: ChatRequest):
+    if not openai_client:
+        raise HTTPException(status_code=503, detail="OPENAI_API_KEY is not configured on the server.")
     context = rag.get_context()
     completion = openai_client.chat.completions.create(
         model="gpt-4o-mini",
