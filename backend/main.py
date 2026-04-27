@@ -1,12 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 from pathlib import Path
 import pandas as pd
 import os
 import re
+from openai import OpenAI
 from dotenv import load_dotenv
 from slide_renderer import render_slides, build_slide_map
+from rag import RAGManager
 
 load_dotenv()
 
@@ -23,12 +26,17 @@ app.add_middleware(
 
 BASE_DIR = Path(__file__).parent
 EXCEL_FILE = BASE_DIR / "My_Gatherings_Simulation (orignal).xlsx"
+AI_EXCEL_FILE = BASE_DIR / "My_Gatherings_Simulation (with ai link).xlsx"
 PPTX_FILE = BASE_DIR / "Screenshot" / "Screen shoits for My Gatherings Simulations 1 and 2.pptx"
 GENERATED_DIR = BASE_DIR / "generated_slides"
 
 # ── Slide extraction at startup ───────────────────────────────────────────────
 slide_files = render_slides(str(PPTX_FILE), str(GENERATED_DIR))
 slide_map = build_slide_map(str(PPTX_FILE))
+
+# ── RAG: load article PDFs from Excel hyperlinks ─────────────────────────────
+rag = RAGManager(str(AI_EXCEL_FILE))
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app.mount("/images", StaticFiles(directory=str(GENERATED_DIR)), name="images")
 
@@ -138,3 +146,42 @@ def get_steps(sim_id: str):
     if steps is None:
         raise HTTPException(status_code=404, detail="Simulation not found")
     return steps
+
+
+class ChatRequest(BaseModel):
+    message: str
+
+
+@app.post("/api/chat")
+def chat(body: ChatRequest):
+    context = rag.get_context()
+    completion = openai_client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a support assistant for BYU Pathway Worldwide missionaries "
+                    "using the My Gatherings system. Your job is to answer questions "
+                    "about My Gatherings only — such as how to view student lists, "
+                    "export data, manage records, and navigate the system.\n\n"
+                    "Rules you must follow:\n"
+                    "1. Only answer questions that are directly related to My Gatherings "
+                    "or the topics covered in the reference material below.\n"
+                    "2. If a question is unrelated to My Gatherings (e.g. general knowledge, "
+                    "math, other systems), politely decline and remind the user you can only "
+                    "help with My Gatherings questions.\n"
+                    "3. Base your answers strictly on the reference material provided. "
+                    "Do not make up information that is not in the material.\n"
+                    "4. If the answer is not in the reference material, say: "
+                    "'I don't have information on that. Please contact your supervisor "
+                    "or check the official BYU Pathway resources.'\n"
+                    "5. Be concise, clear, and friendly.\n\n"
+                    "Reference material:\n\n"
+                    f"{context}"
+                ),
+            },
+            {"role": "user", "content": body.message},
+        ],
+    )
+    return {"reply": completion.choices[0].message.content}

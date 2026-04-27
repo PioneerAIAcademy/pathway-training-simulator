@@ -1,37 +1,52 @@
 import { useState, useRef, useEffect } from "react";
 import "./ChatPanel.css";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 export default function ChatPanel({ open, onToggle }) {
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi! I'm here to help. Ask me anything about this simulation." }
+    { from: "bot", text: "Hi! I'm here to help. Ask me anything about My Gatherings." }
   ]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  function handleSend(e) {
+  async function handleSend(e) {
     e.preventDefault();
-    if (!input.trim()) return;
-    setMessages((m) => [...m, { from: "user", text: input.trim() }]);
+    const text = input.trim();
+    if (!text || loading) return;
+
+    setMessages((m) => [...m, { from: "user", text }]);
     setInput("");
-    setTimeout(() => {
-      setMessages((m) => [...m, { from: "bot", text: "Thanks for your question! AI responses coming soon." }]);
-    }, 600);
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+      });
+      const data = await res.json();
+      setMessages((m) => [...m, { from: "bot", text: data.reply }]);
+    } catch {
+      setMessages((m) => [...m, { from: "bot", text: "Sorry, I couldn't reach the server. Please try again." }]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <>
-      {/* Floating chat bubble — only visible when panel is closed */}
       {!open && (
         <button className="chat-fab" onClick={onToggle} title="Ask a question">
           💬 Ask Question
         </button>
       )}
 
-      {/* Panel — part of layout, pushes main content */}
       <aside className={`chat-panel ${open ? "open" : ""}`}>
         <div className="chat-panel-header">
           <span>💬 Ask a Question</span>
@@ -44,6 +59,11 @@ export default function ChatPanel({ open, onToggle }) {
               {msg.text}
             </div>
           ))}
+          {loading && (
+            <div className="chat-bubble bot chat-typing">
+              <span /><span /><span />
+            </div>
+          )}
           <div ref={bottomRef} />
         </div>
 
@@ -52,8 +72,9 @@ export default function ChatPanel({ open, onToggle }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your question…"
+            disabled={loading}
           />
-          <button type="submit" className="chat-panel-send">↑</button>
+          <button type="submit" className="chat-panel-send" disabled={loading}>↑</button>
         </form>
       </aside>
     </>

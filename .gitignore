@@ -11,6 +11,9 @@ venv/
 env/
 ENV/
 
+# Secrets
+.env
+
 # Excel temp/lock files (created when file is open in Excel)
 ~$*
 
