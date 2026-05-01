@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import "./ChatPanel.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -56,7 +57,9 @@ export default function ChatPanel({ open, onToggle }) {
         <div className="chat-messages">
           {messages.map((msg, i) => (
             <div key={i} className={`chat-bubble ${msg.from}`}>
-              {msg.text}
+              {msg.from === "bot"
+                ? <ReactMarkdown>{msg.text}</ReactMarkdown>
+                : msg.text}
             </div>
           ))}
           {loading && (

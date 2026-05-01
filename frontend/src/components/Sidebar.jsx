@@ -47,7 +47,6 @@ export default function Sidebar({
           className="sidebar-select"
           value={selectedSim || ""}
           onChange={(e) => onSimChange(e.target.value)}
-          disabled={started}
         >
           {simulations.map((s) => (
             <option key={s.id} value={s.id}>{s.name}</option>

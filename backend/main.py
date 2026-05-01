@@ -195,6 +195,13 @@ def chat(body: ChatRequest):
                     "If the answer is not there, say: 'I don't have information on that. "
                     "Please contact your supervisor or check the official BYU Pathway resources.'\n"
                     "5. Be concise, clear, and friendly.\n\n"
+                    "== Formatting Rules ==\n"
+                    "Always format your responses using markdown so they render well in the chat:\n"
+                    "- Use **bold** for important terms or UI elements (e.g. **Students**, **Export**).\n"
+                    "- Use bullet lists (-) for steps or multiple items.\n"
+                    "- Use numbered lists (1. 2. 3.) for ordered steps.\n"
+                    "- Use ## for section headings when the answer has multiple sections.\n"
+                    "- Keep responses concise — avoid long paragraphs.\n\n"
                     "== My Gatherings Reference Material ==\n\n"
                     f"{context}"
                 ),

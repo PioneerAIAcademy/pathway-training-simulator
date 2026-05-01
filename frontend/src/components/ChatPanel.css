@@ -162,6 +162,104 @@
   background: #e6b000;
 }
 
+/* ── Markdown inside bot bubbles ─────────────── */
+.chat-bubble.bot { padding: 12px 16px; }
+
+.chat-bubble.bot p {
+  margin: 0 0 10px;
+  line-height: 1.6;
+}
+.chat-bubble.bot p:last-child { margin-bottom: 0; }
+
+.chat-bubble.bot h1,
+.chat-bubble.bot h2,
+.chat-bubble.bot h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #002E5D;
+  margin: 12px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(0,46,93,0.12);
+}
+.chat-bubble.bot h1:first-child,
+.chat-bubble.bot h2:first-child,
+.chat-bubble.bot h3:first-child { margin-top: 0; }
+
+[data-theme="dark"] .chat-bubble.bot h1,
+[data-theme="dark"] .chat-bubble.bot h2,
+[data-theme="dark"] .chat-bubble.bot h3 {
+  color: #FFC328;
+  border-color: rgba(255,195,40,0.2);
+}
+
+.chat-bubble.bot ul {
+  margin: 4px 0 10px 0;
+  padding: 0;
+  list-style: none;
+}
+.chat-bubble.bot ul li {
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 5px;
+  line-height: 1.55;
+}
+.chat-bubble.bot ul li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: #FFC328;
+  font-weight: 900;
+}
+
+.chat-bubble.bot ol {
+  margin: 4px 0 10px 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ol-counter;
+}
+.chat-bubble.bot ol li {
+  padding-left: 22px;
+  position: relative;
+  margin-bottom: 5px;
+  line-height: 1.55;
+  counter-increment: ol-counter;
+}
+.chat-bubble.bot ol li::before {
+  content: counter(ol-counter) ".";
+  position: absolute;
+  left: 2px;
+  font-weight: 700;
+  color: #002E5D;
+  font-size: 0.82rem;
+}
+[data-theme="dark"] .chat-bubble.bot ol li::before { color: #FFC328; }
+
+.chat-bubble.bot strong { font-weight: 700; }
+.chat-bubble.bot em { font-style: italic; opacity: 0.85; }
+
+.chat-bubble.bot code {
+  background: rgba(0,46,93,0.08);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.82em;
+  font-family: monospace;
+}
+[data-theme="dark"] .chat-bubble.bot code { background: rgba(255,255,255,0.1); }
+
+.chat-bubble.bot hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 10px 0;
+}
+
+.chat-bubble.bot blockquote {
+  border-left: 3px solid #FFC328;
+  margin: 8px 0;
+  padding: 4px 10px;
+  opacity: 0.85;
+  font-style: italic;
+}
+
 /* Typing indicator */
 .chat-typing {
   display: flex;

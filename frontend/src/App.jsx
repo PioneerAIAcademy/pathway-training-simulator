@@ -49,7 +49,6 @@ export default function App() {
     setPhase("simulation");
     setSimStep(0);
     setPrevSuccess(null);
-
   }
 
   function handleChooseSim() {
@@ -57,8 +56,16 @@ export default function App() {
     setPhase("simulation");
     setSimStep(0);
     setPrevSuccess(null);
-
     setSidebarOpen(true);
+  }
+
+  function handleSimChange(simId) {
+    setSelectedSim(simId);
+    if (started) {
+      setSimStep(0);
+      setPrevSuccess(null);
+      setPhase("simulation");
+    }
   }
 
   const showChat = true;
@@ -71,7 +78,7 @@ export default function App() {
             <img src={byuLogo} alt="BYU Pathway Worldwide" className="top-bar-logo" />
           </a>
           <div className="top-bar-title-wrap">
-            <h1 className="top-bar-title">My Gatherings Training Simulator</h1>
+            <h1 className="top-bar-title">Software Training Simulator</h1>
           </div>
           <SettingsMenu theme={theme} onThemeChange={setTheme} />
         </div>
@@ -86,7 +93,7 @@ export default function App() {
           simStep={simStep}
           totalSteps={totalSteps}
           selectedSim={selectedSim}
-          onSimChange={setSelectedSim}
+          onSimChange={handleSimChange}
           onStart={startSim}
         />
 
@@ -94,9 +101,9 @@ export default function App() {
           {!started && (
             <div className="welcome">
               <div className="welcome-card">
-                <h1>My Gatherings Training Simulator</h1>
+                <h1>Software Training Simulator</h1>
                 <p>
-                  Practice navigating the My Gatherings system before working with real students.
+                  Practice navigating software systems before working with real students.
                 </p>
                 <div className="welcome-section-title">How to use the Simulator</div>
                 <div className="welcome-steps">
