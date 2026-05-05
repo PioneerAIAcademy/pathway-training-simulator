@@ -8,8 +8,17 @@
   width: 100%;
 }
 
+.sim-step .step-nav,
 .sim-step .step-label,
 .sim-step .instruction { width: 100%; }
+
+/* ── Step navigation row ─────────────────────── */
+.step-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
 
 .step-label {
   font-size: 0.85rem;
@@ -17,6 +26,31 @@
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.nav-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #002E5D;
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.nav-arrow:hover:not(:disabled) {
+  background: #FFC328;
+  color: #002E5D;
+}
+.nav-arrow:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
 }
 
 .loading { color: var(--text-muted); padding: 32px; }

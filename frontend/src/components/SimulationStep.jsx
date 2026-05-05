@@ -3,7 +3,7 @@ import "./SimulationStep.css";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-export default function SimulationStep({ simId, simStep, onCorrect, onTotalSteps }) {
+export default function SimulationStep({ simId, simStep, onCorrect, onTotalSteps, onNavigate }) {
   const [steps, setSteps] = useState([]);
   const [error, setError] = useState(null);
   const [successToast, setSuccessToast] = useState(null);
@@ -77,6 +77,22 @@ export default function SimulationStep({ simId, simStep, onCorrect, onTotalSteps
           Continue →
         </button>
       )}
+
+      <div className="step-nav">
+        <button
+          className="nav-arrow"
+          onClick={() => onNavigate(-1)}
+          disabled={simStep === 0}
+          title="Previous step"
+        >‹</button>
+        <span className="step-label">Step {simStep + 1} of {steps.length}</span>
+        <button
+          className="nav-arrow"
+          onClick={() => onNavigate(1)}
+          disabled={simStep === steps.length - 1}
+          title="Next step"
+        >›</button>
+      </div>
     </div>
   );
 }

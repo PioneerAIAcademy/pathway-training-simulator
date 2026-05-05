@@ -59,6 +59,14 @@ export default function App() {
     setSidebarOpen(true);
   }
 
+  function handleNavigate(delta) {
+    const next = simStep + delta;
+    if (next >= 0 && next < totalSteps) {
+      setSimStep(next);
+      setPrevSuccess(null);
+    }
+  }
+
   function handleSimChange(simId) {
     setSelectedSim(simId);
     if (started) {
@@ -140,6 +148,7 @@ export default function App() {
               simStep={simStep}
               onCorrect={handleStepCorrect}
               onTotalSteps={setTotalSteps}
+              onNavigate={handleNavigate}
             />
           )}
 
